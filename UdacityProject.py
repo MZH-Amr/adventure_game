@@ -7,7 +7,10 @@ II = "Invalid input"
 
 
 def slowPrint(string, delay=1.5):
-    # Print slowly
+    """
+    Prints the "string" parameter
+    then waits "delay" seconds
+    """
 
     print(string)
     # Print the value of the "string" parameter
@@ -20,7 +23,10 @@ def slowPrint(string, delay=1.5):
 
 
 def takeInput(choices, question):
-    # Take player's input and validate it
+    """
+    Asks the player by printing the "question" parameter
+    then takes the player input and make sure it's in the "choices" parameter
+    """
 
     answer = input(f"{question}: ")
     # The question parameter is the question that the player will to be asked
@@ -33,7 +39,10 @@ def takeInput(choices, question):
 
 
 def replay():
-    # Give the player an option to replay
+    """
+    Give the player an option to replay
+    in the case of a loss
+    """
 
     answer = input("Do you want to play again? Yes [Y] No [N]: ")
 
@@ -46,11 +55,12 @@ def replay():
         replay()
 
 
-def changeScore(change):
-    # Change and print the score
-
-    global score
-    # Make the score variable global
+def changeScore(score, change):
+    """
+    Changes the score then prints it
+    then prints by how much the score changed
+    and makes sure the score is not less than 0
+    """
 
     try:
         score += change
@@ -69,6 +79,8 @@ def changeScore(change):
         # Print the change in score
         slowPrint(f"Your score is {score}")
         # Print the score
+        return score
+        # Returns the score so the main function changes it
 
 
 def win():
@@ -78,28 +90,37 @@ def win():
 
 
 def main():
-    # The main function for replaying
+    # The main function which executes each senario
 
-    global score
     score = 0
-    # The score variable
     """
-    The score variable is in the main function so the score resets
-    whenever the player replays with the replay function
+    This is the score variable,
+    the score variable is in the main function so the score resets
+    whenever the player replays
     """
 
-    if deviceBurning():
-        if hungry():
-            if animalChase():
-                if lights():
-                    if insect():
-                        if treasureNews():
-                            findingTreasure()
-    # Execute functions which contain the game senarios
+    senarios = [deviceBurning,
+                hungry,
+                animalChase,
+                lights,
+                insect,
+                treasureNews,
+                findingTreasure,
+                ]
+
+    for senario in senarios:
+        result = senario()
+        if result:
+            score = changeScore(score, result)
+        else:
+            replay()
 
 
 def deviceBurning():
-    # When the a device catches on fire
+    """
+    This is the 1st game senario
+    A device catches on fire
+    """
 
     device = choice(
         [
@@ -107,9 +128,15 @@ def deviceBurning():
             "PC",
             "laptop",
             "TV",
+            "microwave",
+            "fan",
         ]
     )
-    # Choose a random device
+    """
+    Chooses a random device
+    which will catch fire
+    """
+
     slowPrint("You are at your house")
     slowPrint(f"But your {device} is on fire")
     answer = takeInput(
@@ -117,35 +144,47 @@ def deviceBurning():
         "Should you use the fire extinguisher [1] "
         "or go get some water from the kitchen [2]?"
     )
-    # Take the player's input
+    # Take the player's choice
 
     if answer == "1":
         slowPrint("Congratulations!")
         slowPrint("You extinguished the fire")
-        changeScore(1)
-        # Print the score
-        return True
-        # To execute the next function
+        return 1
+        """
+        Returns "1" so the main function
+        changes the score by 1
+        and executes the next senario
+        """
     else:
-        slowPrint(f"The {device} is pluged in")
+        slowPrint(f"The {device} was plugged in")
         slowPrint("You made it worse")
         slowPrint("Now your house is on fire")
         slowPrint("You lost!")
-        replay()
+        return 0
+        """
+        Returns "0" so the main function
+        gives the player the option to replay
+        """
 
 
 def hungry():
-    # When the player goes outside
+    """
+    This is the 2nd game senario
+    The player goes outside and get hungry
+    """
 
     food = choice(
         [
-            "sandwich",
-            "burger",
-            "piece of meat",
+            "a sandwich",
+            "a burger",
+            "a pizza",
+            "some meat",
             "chicken",
+            "french fries",
         ]
     )
-    # Choose random food
+    # Chooses random food
+
     slowPrint("You go outside")
     slowPrint("But you are hungry")
     answer = takeInput(
@@ -156,19 +195,31 @@ def hungry():
 
     if answer == "1":
         slowPrint("Okay")
-        changeScore(-0.5)
+        return -0.5
+        """
+        Returns "-0.5" so the main function
+        changes the score by -0.5
+        and executes the next senario
+        """
     else:
-        slowPrint(f"You stole a {food}")
+        slowPrint(f"You stole {food}")
         slowPrint("But someone saw you and called the police")
         slowPrint(
-            f"You have to pay the price of the {food} and a 0.5 points fee")
-        changeScore(-1)
-    return True
-    # To execute the next function
+            f"You have to pay the price of the {food} and a 0.5 points fee"
+        )
+        return -1
+        """
+        Returns "-1" so the main function
+        changes the score by -1
+        and executes the next senario
+        """
 
 
 def animalChase():
-    # When the animal chases the player
+    """
+    This is the 3rd game senario
+    An animal chases the player
+    """
 
     animal = choice(
         [
@@ -178,7 +229,8 @@ def animalChase():
             "animal",
         ]
     )
-    # Choose a random animal
+    # Chooses a random animal
+
     slowPrint(f"A hungry {animal} saw you")
     slowPrint("And it's chasing you")
     answer = takeInput(
@@ -188,17 +240,20 @@ def animalChase():
 
     if answer == "1":
         slowPrint(f"You succesfully ran from the {animal}")
-        changeScore(1)
+        return 1
+        # Changes score and executes next senario
     else:
         slowPrint(f"The {animal} bit you")
         slowPrint("Someone takes you to the hospital")
-        changeScore(-1)
-    return True
-    # To execute the next function
+        return -1
+        # Changes score and executes next senario
 
 
 def lights():
-    # When the lights
+    """
+    This is the 4th game senario
+    The lights go out
+    """
 
     slowPrint("You are back home")
     slowPrint("But the lights go out")
@@ -210,16 +265,19 @@ def lights():
     if answer == "1":
         slowPrint("You got shocked by electric wires")
         slowPrint("You go to the hospital")
-        changeScore(-1)
+        return -1
+        # Changes score and executes next senario
     else:
-        slowPrint("The electrician fixed the wires")
-        changeScore(1)
-    return True
-    # To execute the next function
+        slowPrint("The electrician fixed it")
+        return 1
+        # Changes score and executes next senario
 
 
 def insect():
-    # When the spider approaches
+    """
+    This is the 5th game senario
+    An insect approaches
+    """
 
     insect = choice(
         [
@@ -237,16 +295,21 @@ def insect():
 
     if answer == "1":
         slowPrint("Okay")
-        changeScore(1)
+        return 1
+        # Changes score and executes next senario
     else:
         slowPrint("Really?")
         slowPrint("You should be ashamed!")
-        changeScore(-1)
-    return True
-    # To execute the next function
+        return -1
+        # Changes score and executes next senario
 
 
 def treasureNews():
+    """
+    This is the 6th game senario
+    The news talk about a treasure
+    """
+
     slowPrint("You sit and watch the TV")
     slowPrint(
         "The news say there is a treasure hidden somewhere"
@@ -259,19 +322,25 @@ def treasureNews():
 
     if answer == "1":
         slowPrint("Okay")
-        return True
-        # To execute the next function
+        return 0.5
+        # Changes score and executes next senario
     elif answer == "2":
         slowPrint("C'mon")
         slowPrint("Find the treasure!")
-        return True
-        # To execute the next function
+        return -0.5
+        # Changes score and executes next senario
     elif answer == "3":
         slowPrint("You found a cheat code")
         win()
+        # A way to win fast...-er, well, it's not that much faster
 
 
 def findingTreasure():
+    """
+    This is the 7th and the last game senario
+    The player gets the treasure
+    """
+
     slowPrint("You go outside again")
     slowPrint(
         "Then you enter an old man's house"
@@ -282,8 +351,8 @@ def findingTreasure():
     slowPrint("So he gives you a map")
     slowPrint("You follow the map")
     slowPrint("And you find the treasure")
-    changeScore(10)
     win()
+    # The player wins here
 
 
 main()
