@@ -1,5 +1,6 @@
 from time import sleep
 from random import choice
+
 # Not importing "time" and "random" since only "sleep" and "choice" are needed
 
 II = "Invalid input"
@@ -84,13 +85,13 @@ def changeScore(score, change):
 
 
 def win():
-    # When the player wins
+    """When the player wins"""
     slowPrint("Congratulations!")
     slowPrint("You win!")
 
 
 def main():
-    # The main function which executes each senario
+    """The main function which executes each senario"""
 
     score = 0
     """
@@ -99,14 +100,15 @@ def main():
     whenever the player replays
     """
 
-    senarios = [deviceBurning,
-                hungry,
-                animalChase,
-                lights,
-                insect,
-                treasureNews,
-                findingTreasure,
-                ]
+    senarios = [
+        deviceBurning,
+        hungry,
+        animalChase,
+        lights,
+        insect,
+        treasureNews,
+        findingTreasure,
+    ]
 
     for senario in senarios:
         result = senario()
@@ -117,10 +119,7 @@ def main():
 
 
 def deviceBurning():
-    """
-    This is the 1st game senario
-    A device catches on fire
-    """
+    """A device catches on fire"""
 
     device = choice(
         [
@@ -142,7 +141,7 @@ def deviceBurning():
     answer = takeInput(
         ["1", "2"],
         "Should you use the fire extinguisher [1] "
-        "or go get some water from the kitchen [2]?"
+        "or go get some water from the kitchen [2]?",
     )
     # Take the player's choice
 
@@ -168,10 +167,7 @@ def deviceBurning():
 
 
 def hungry():
-    """
-    This is the 2nd game senario
-    The player goes outside and get hungry
-    """
+    """The player goes outside and get hungry"""
 
     food = choice(
         [
@@ -189,7 +185,7 @@ def hungry():
     slowPrint("But you are hungry")
     answer = takeInput(
         ["1", "2"],
-        "Should you buy food for 0.5 score point [1] or steal some food [2]?"
+        "Should you buy food for 0.5 score point [1] or steal some food [2]?",
     )
     # Take the player's input
 
@@ -204,9 +200,7 @@ def hungry():
     else:
         slowPrint(f"You stole {food}")
         slowPrint("But someone saw you and called the police")
-        slowPrint(
-            f"You have to pay the price of the {food} and a 0.5 points fee"
-        )
+        slowPrint(f"You have to pay the price of the {food} and a 0.5 points fee")
         return -1
         """
         Returns "-1" so the main function
@@ -216,10 +210,7 @@ def hungry():
 
 
 def animalChase():
-    """
-    This is the 3rd game senario
-    An animal chases the player
-    """
+    """An animal chases the player"""
 
     animal = choice(
         [
@@ -233,10 +224,7 @@ def animalChase():
 
     slowPrint(f"A hungry {animal} saw you")
     slowPrint("And it's chasing you")
-    answer = takeInput(
-        ["1", "2"],
-        f"Should you run [1] or kill the {animal} [2]?"
-    )
+    answer = takeInput(["1", "2"], f"Should you run [1] or kill the {animal} [2]?")
 
     if answer == "1":
         slowPrint(f"You succesfully ran from the {animal}")
@@ -250,16 +238,12 @@ def animalChase():
 
 
 def lights():
-    """
-    This is the 4th game senario
-    The lights go out
-    """
+    """The lights go out"""
 
     slowPrint("You are back home")
     slowPrint("But the lights go out")
     answer = takeInput(
-        ["1", "2"],
-        "Should you fix it [1] or call an electrician to fix it [2]?"
+        ["1", "2"], "Should you fix it [1] or call an electrician to fix it [2]?"
     )
 
     if answer == "1":
@@ -274,10 +258,7 @@ def lights():
 
 
 def insect():
-    """
-    This is the 5th game senario
-    An insect approaches
-    """
+    """An insect approaches"""
 
     insect = choice(
         [
@@ -288,10 +269,7 @@ def insect():
     )
     # Choose a random insect
     slowPrint(f"A {insect} approaches")
-    answer = takeInput(
-        ["1", "2"],
-        f"Should you kill the {insect} [1] or run away [2]?"
-    )
+    answer = takeInput(["1", "2"], f"Should you kill the {insect} [1] or run away [2]?")
 
     if answer == "1":
         slowPrint("Okay")
@@ -305,10 +283,7 @@ def insect():
 
 
 def treasureNews():
-    """
-    This is the 6th game senario
-    The news talk about a treasure
-    """
+    """The news talk about a treasure"""
 
     slowPrint("You sit and watch the TV")
     slowPrint(
@@ -316,8 +291,7 @@ def treasureNews():
         " that contains alot of score points"
     )
     answer = takeInput(
-        ["1", "2", "3"],
-        "Should you search for the treasure [1] or stay home [2]?"
+        ["1", "2", "3"], "Should you search for the treasure [1] or stay home [2]?"
     )
 
     if answer == "1":
@@ -336,10 +310,7 @@ def treasureNews():
 
 
 def findingTreasure():
-    """
-    This is the 7th and the last game senario
-    The player gets the treasure
-    """
+    """The player gets the treasure"""
 
     slowPrint("You go outside again")
     slowPrint(
